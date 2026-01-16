@@ -1,0 +1,11 @@
+# Ignore local development files
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Ignore test files
+test_api.py
+
+# Ignore documentation
+todo.md

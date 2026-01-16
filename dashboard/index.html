@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmaceutical Cold Chain Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🧊 Pharmaceutical Cold Chain Monitoring</h1>
+            <p>Good Health and Well-being (SDG 3)</p>
+
+            <div class="header-controls">
+                <div class="control-group">
+                    <label class="control-label">Time Frame:</label>
+                    <input type="number" id="time-value" class="control-input" value="30" min="1">
+                    <select id="time-unit" class="control-select">
+                        <option value="minutes" selected>Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                    </select>
+                    <button id="apply-time-filter" class="control-btn apply" title="Apply Filter">Apply</button>
+                </div>
+                <button id="pause-btn" class="control-btn pause" title="Pause real-time updates">
+
+                    ⏸️ Pause Updates
+                </button>
+                <button id="export-btn" class="control-btn export" title="Export data to CSV">
+                    📥 Export CSV
+                </button>
+                <button id="clear-all-btn" class="clear-all-button" title="Clear all sensor data and predictions">
+                    🗑️ Clear All Data
+                </button>
+            </div>
+
+        </header>
+
+        <div class="latest-reading-box">
+            <div class="latest-header">
+                <h2>Latest Reading</h2>
+                <div class="latest-timestamp-header">
+                    <span id="latest-timestamp">No data yet</span>
+                </div>
+            </div>
+            <div class="latest-content">
+                <div class="latest-sensors">
+                    <div class="latest-sensor temp">
+                        <div class="latest-details">
+                            <span class="latest-label">Temperature</span>
+                            <span class="latest-value" id="latest-temp">--</span>
+                        </div>
+                    </div>
+                    <div class="latest-sensor vib">
+                        <div class="latest-details">
+                            <span class="latest-label">Vibration</span>
+                            <span class="latest-value" id="latest-vib">--</span>
+                        </div>
+                    </div>
+                    <div class="latest-sensor rpm">
+                        <div class="latest-details">
+                            <span class="latest-label">Fan Speed</span>
+                            <span class="latest-value" id="latest-rpm">--</span>
+                        </div>
+                    </div>
+                    <div class="latest-sensor prediction">
+                        <div class="latest-details">
+                            <span class="latest-label">Spoilage Risk</span>
+                            <span class="latest-value latest-risk-value" id="latest-risk">--%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-section">
+                <h2>Temperature Trend</h2>
+                <canvas id="temperatureChart"></canvas>
+            </div>
+
+            <div class="chart-section">
+                <h2>Vibration Trend</h2>
+                <canvas id="vibrationChart"></canvas>
+            </div>
+
+            <div class="chart-section">
+                <h2>Fan (Cooling) Trend</h2>
+                <canvas id="rpmChart"></canvas>
+            </div>
+            <div class="chart-section">
+                <h2>Spoilage Risk Trend</h2>
+                <canvas id="riskChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2>All Metrics Combined</h2>
+            <canvas id="combinedChart"></canvas>
+        </div>
+
+        <div class="chart-section">
+            <h2>Recent Predictions</h2>
+            <div class="predictions-controls">
+                <input type="text" id="search-input" placeholder="Search by timestamp..." class="search-box">
+                <select id="risk-filter" class="filter-select">
+                    <option value="all">All Risk Levels</option>
+                    <option value="low">Low Risk (< 20%)</option>
+                    <option value="medium">Medium Risk (20-50%)</option>
+                    <option value="high">High Risk (> 50%)</option>
+                </select>
+                <button id="clear-filters" class="clear-btn">Clear Filters</button>
+            </div>
+            <div id="predictions-list"></div>
+        </div>
+
+        <footer>
+            <p>Last updated: <span id="last-update">Never</span></p>
+            <p>Total readings: <span id="total-readings">0</span></p>
+        </footer>
+    </div>
+
+    <!-- Paho MQTT -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+</body>
+
+</html>
