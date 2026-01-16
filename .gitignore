@@ -82,4 +82,3 @@ htmlcov/
 # Docker
 *.dockerfile.swp
 presentation_script.md
-report.md
