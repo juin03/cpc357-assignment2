@@ -70,8 +70,8 @@ desktop.ini
 *.joblib
 *.h5
 *.hdf5
-# ml-model/*.pkl
-ml-model/*.joblib
+cloud/ml-model/
+cloud/key.json
 
 # Testing
 .pytest_cache/

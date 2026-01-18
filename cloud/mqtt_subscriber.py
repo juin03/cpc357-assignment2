@@ -69,8 +69,8 @@ def calculate_rule_based_risk(data, sql_session):
         
         if last_compliant:
             duration_secs = (datetime.utcnow() - last_compliant.timestamp).total_seconds()
-            # Escalate risk based on duration (e.g., 0.1 per minute, max 0.6)
-            temp_risk = min(0.2 + (duration_secs / 600), 0.6) 
+            # Escalate risk based on duration (e.g., 0.1 per minute, max 1.0)
+            temp_risk = min(0.2 + (duration_secs / 60), 1.0) 
         else:
             temp_risk = 0.3 # High initial risk if no compliant data found
         risk_reasons.append("Temperature Excursion")
@@ -79,7 +79,7 @@ def calculate_rule_based_risk(data, sql_session):
     rpm = data['rpm']
     rpm_risk = 0.0
     if rpm < 500:
-        rpm_risk = 0.8 # Critical failure if fan stops
+        rpm_risk = 1.0 # Critical failure if fan stops
         risk_reasons.append("Cooling Fan Failure")
     elif rpm < 1000:
         rpm_risk = 0.3 # Warning for low RPM
@@ -89,7 +89,7 @@ def calculate_rule_based_risk(data, sql_session):
     vib = data['vibration']
     vib_risk = 0.0
     if vib > 2.0: # High shock
-        vib_risk = 0.5
+        vib_risk = 1.0
         risk_reasons.append("Vibration/Shock Detected")
 
     # Final Risk calculation
